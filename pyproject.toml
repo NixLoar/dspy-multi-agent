@@ -7,8 +7,9 @@ authors = ["NixLoar <nix.loar@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.13.0,<3.14"
 python-dotenv = "^1.2.1"
+dspy = "^3.0.3"
 
 [build-system]
 requires = ["poetry-core"]
