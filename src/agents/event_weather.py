@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 import json
 from typing import Any
 import dspy
@@ -34,16 +34,13 @@ class EventWeatherAgent(dspy.Module):
         super().__init__()
         self.extractor = dspy.Predict(ExtractDateLocationSignature)
         self.weathermapper = dspy.Predict(WeatherResultSignature)
+        self.weather_ds = WeatherDataSource()
 
     def forward(self, user_input: str) -> dict[str, Any]:
         today = datetime.now().strftime("%d/%m/%Y")
         data_extracted = self.extractor(user_input=user_input, today=today)
 
-        weather_ds = WeatherDataSource()
-
-        weather = weather_ds.get_forecast(
-            data_extracted.event_date, data_extracted.location
-        )
+        weather = self.weather_ds.get_forecast(date_ddmmyyyy=data_extracted.event_date)
 
         result = {
             "event_date": data_extracted.event_date,
@@ -68,4 +65,4 @@ def call_event_weather_agent(user_input: str) -> str:
     Retorno: JSON string com {event_date, location, forecast{summary,tmin,tmax,rain_chance}}
     """
     result = _event_weather_agent(user_input=user_input)
-    return json.dumps(result, ensure_ascii=False)
+    return json.dumps(result)

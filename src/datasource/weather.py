@@ -27,6 +27,7 @@ class WeatherDataSource:
                 "rain_chance": 70,
             },
         }
+
         self._fallback = fallback or {
             "summary": "Tempo estável",
             "tmin": 19,
@@ -34,11 +35,10 @@ class WeatherDataSource:
             "rain_chance": 30,
         }
 
-    @staticmethod
-    def get_forecast(self, date_ddmmyyyy: str, location: str) -> dict[str, Any]:
+    def get_forecast(self, date_ddmmyyyy: str) -> dict[str, Any]:
         return self._db.get(date_ddmmyyyy, self._fallback)
 
-    def choose_weather_bucket(tmin: int, tmax: int, rain_chance: int) -> str:
+    def choose_weather_bucket(self, tmin: int, tmax: int, rain_chance: int) -> str:
         if rain_chance >= 60:
             return "chuva"
         avg = (tmin + tmax) / 2

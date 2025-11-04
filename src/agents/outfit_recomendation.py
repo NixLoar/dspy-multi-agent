@@ -2,7 +2,7 @@ import json
 from typing import Any
 import dspy
 
-from datasource.wardrobe import _WARDROBE
+from datasource.wardrobe import WARDROBE
 from datasource.weather import WeatherDataSource
 
 
@@ -16,26 +16,26 @@ class OutfitRecommenderSignature(dspy.Signature):
 
 class OutfitRecommenderAgent(dspy.Module):
     """
-    Recebe perfil + clima, consulta o datasource fictício e retorna até 3 opções.
+    Generate outfit recommendations based on user profile and weather.
     """
 
     def __init__(self):
         super().__init__()
         self.recommender = dspy.Predict(OutfitRecommenderSignature)
+        self.weather_ds = WeatherDataSource()
 
     def forward(self, profile: dict[str, Any], weather: dict[str, Any]) -> list[str]:
         gender = profile.get("gender", "neutro")
         prefs = profile.get("preferences", {}) or {}
 
         forecast = weather.get("forecast", {})
-        weather_ds = WeatherDataSource()
-        bucket = weather_ds.choose_weather_bucket(
+        bucket = self.weather_ds.choose_weather_bucket(
             forecast.get("tmin", 19),
             forecast.get("tmax", 27),
             forecast.get("rain_chance", 30),
         )
 
-        catalog = _WARDROBE.get(gender, _WARDROBE["neutro"]).get(bucket, [])
+        catalog = WARDROBE.get(gender, WARDROBE["neutro"]).get(bucket, [])
 
         colors = (
             set([color.lower() for color in prefs.get("cores_preferidas", [])])
@@ -75,4 +75,4 @@ def call_outfit_recommender_agent(context_json: str) -> str:
     profile = ctx.get("profile", {})
     weather = ctx.get("weather", {})
     combos = _outfit_agent(profile=profile, weather=weather)
-    return json.dumps(combos, ensure_ascii=False)
+    return json.dumps(combos)

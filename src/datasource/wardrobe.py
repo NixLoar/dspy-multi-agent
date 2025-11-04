@@ -1,4 +1,4 @@
-_WARDROBE = {
+WARDROBE = {
     "masculino": {
         "frio": [
             "Jaqueta de sarja + camisa oxford + calça chino + bota",

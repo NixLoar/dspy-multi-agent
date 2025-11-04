@@ -51,4 +51,4 @@ def call_user_profile_agent(user_input: str) -> str:
     Retorno: JSON string com {gender, preferences}
     """
     result = _user_profile_agent(user_input=user_input)
-    return json.dumps(result, ensure_ascii=False)
+    return json.dumps(result)
