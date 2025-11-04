@@ -1,0 +1,11 @@
+execution_duration_ms: 2827
+request_preview: '{"user_input": "    today: str = dspy.InputField(desc=\"Today''s
+  date in DD/MM/YYYY\")"}'
+request_time: '2025-11-04T19:59:01.365Z'
+response_preview: ''
+state: OK
+trace_id: tr-f64226a2c23402775f566899e50c901f
+trace_location:
+  mlflow_experiment:
+    experiment_id: '502760429829101299'
+  type: MLFLOW_EXPERIMENT

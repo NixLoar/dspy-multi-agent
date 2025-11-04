@@ -1,0 +1,11 @@
+execution_duration_ms: 12194
+request_preview: '{"user_input": "sou mulher, gosto de roxo e gostaria de uma roupa
+  para um evento dia 05 de novembro em são paulo"}'
+request_time: '2025-11-04T19:56:20.886Z'
+response_preview: ''
+state: OK
+trace_id: tr-0fc69ef75b123bbec2caf82cd8082a1a
+trace_location:
+  mlflow_experiment:
+    experiment_id: '502760429829101299'
+  type: MLFLOW_EXPERIMENT
